@@ -1,0 +1,10 @@
+.venv/
+node_modules/
+models/
+vo/
+frames/
+out/
+*.wav
+__pycache__/
+web/story.json
+web/timings.json

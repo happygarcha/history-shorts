@@ -1,0 +1,12 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+html,body{margin:0;background:#000;overflow:hidden}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden}
+canvas{position:absolute;left:0;top:0;width:1080px;height:1920px}
+#vig{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 45%,rgba(0,0,0,0) 50%,rgba(0,0,0,.6) 100%);pointer-events:none}
+#sub{position:absolute;left:40px;right:40px;top:1240px;height:260px;display:flex;align-items:center;justify-content:center;text-align:center;
+ font-family:"Liberation Sans","DejaVu Sans",Arial,sans-serif;font-weight:900;font-size:104px;line-height:1.05;text-transform:uppercase;color:#fff;
+ -webkit-text-stroke:18px #000;paint-order:stroke fill;letter-spacing:1px}
+#sub span{display:inline-block;margin:0 14px}
+#sub span.on{color:#ffd23f;transform:scale(1.07)}
+</style></head><body><div id="stage"><canvas id="c" width="1080" height="1920"></canvas><div id="vig"></div><div id="sub"></div></div>
+<script type="module" src="/scene.js"></script></body></html>
