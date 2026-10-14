@@ -63,7 +63,7 @@ function stars(n, maxY = 600) { ctx.fillStyle = '#fff'; for (let i = 0; i < n; i
 // ---- text layers ----
 function layers(sc, u, accent) {
   if (sc.kicker) text(type(sc.kicker, u, 0.15, sc.kicker.length > 8 ? 14 : 6), 540, 250, 230, accent, 'center', 900, 12, 960);
-  if (sc.sub) { ctx.globalAlpha = ss(0.8, 1.2, u); text(sc.sub, 540, sc.kicker ? 400 : 1130, sc.kicker ? 50 : 40, sc.kicker ? '#fff' : accent, 'center', 700, 0, 960); ctx.globalAlpha = 1; }
+  if (sc.sub && sc.motif !== 'cta') { ctx.globalAlpha = ss(0.8, 1.2, u); text(sc.sub, 540, sc.kicker ? 400 : 1130, sc.kicker ? 50 : 40, sc.kicker ? '#fff' : accent, 'center', 700, 0, 960); ctx.globalAlpha = 1; }
   if (sc.headline) {
     const n = sc.headline.length, y0 = sc.kicker ? 560 : (sc.motif === 'cta' ? 360 : 300), sp = sc.motif === 'cta' ? 165 : 170;
     const sizes = n === 3 ? [118, 200, 150] : n === 2 ? [150, 180] : [170];
@@ -71,7 +71,46 @@ function layers(sc, u, accent) {
     sc.headline.forEach((l, i) => { const a = ss(0.1 + i * 0.12, 0.45 + i * 0.12, u); ctx.globalAlpha = a; text(l, 540, y0 + i * sp, sizes[i], cols[i] || '#fff', 'center', 900, 14, 980); });
     ctx.globalAlpha = 1;
   }
-  if (sc.reveal) { ctx.globalAlpha = ss(2.4, 3.0, u); text(sc.reveal, 540, 1640, 78, RED, 'center', 900, 10, 1000); ctx.globalAlpha = 1; }
+}
+
+
+// ---- explanatory overlays: progress bar, reveal banner, fact card, timeline ----
+function panel(x, y, w, h, accent) {
+  ctx.fillStyle = 'rgba(0,0,0,.64)'; ctx.beginPath(); ctx.roundRect(x, y, w, h, 22); ctx.fill();
+  ctx.strokeStyle = 'rgba(255,255,255,.18)'; ctx.lineWidth = 2; ctx.stroke();
+  ctx.fillStyle = accent; ctx.beginPath(); ctx.roundRect(x, y, 12, h, [22, 0, 0, 22]); ctx.fill();
+}
+function hud(si, u) {
+  const x0 = 60, gap = 10, w = (960 - 5 * gap) / 6;
+  for (let i = 0; i < 6; i++) { const x = x0 + i * (w + gap); ctx.fillStyle = 'rgba(255,255,255,.25)'; ctx.fillRect(x, 46, w, 9); ctx.fillStyle = '#ffd23f'; ctx.fillRect(x, 46, w * (i < si ? 1 : i === si ? u / 5 : 0), 9); }
+  if (story.hud) text(story.hud, 540, 98, 30, 'rgba(255,255,255,.9)', 'center', 800, 6, 960);
+  if (story.kind === 'current' && story.asof) text('AS OF ' + story.asof, 540, 138, 24, '#ffd23f', 'center', 800, 5, 700);
+}
+function reveal(sc, u) {
+  if (!sc.reveal) return; const a = ss(2.4, 3.0, u); ctx.globalAlpha = a; ctx.fillStyle = 'rgba(0,0,0,.62)'; ctx.fillRect(0, 870, W, 112);
+  text(sc.reveal, 540, 926, 70, RED, 'center', 900, 8, 1000); ctx.globalAlpha = 1;
+}
+function facts(sc, u, ac) {
+  if (!sc.facts || !sc.facts.length || sc.motif === 'dna_lab' || sc.motif === 'cta') return;
+  const n = Math.min(3, sc.facts.length), h = 28 + n * 64, y0 = 1000;
+  ctx.globalAlpha = ss(0.7, 1.1, u); panel(60, y0, 960, h, ac);
+  sc.facts.slice(0, 3).forEach((f, i) => { const k = ss(0.9 + i * 0.55, 1.3 + i * 0.55, u); ctx.globalAlpha = k; text('▸ ' + f, 100 + (1 - k) * 90, y0 + 46 + i * 64, 42, '#fff', 'left', 800, 0, 890); });
+  ctx.globalAlpha = 1;
+}
+function timeline(si, u) {
+  const ents = story.scenes.map((s, i) => (s.tl ? { ...s.tl, i } : null)).filter(Boolean);
+  if (!ents.length || si < ents[0].i) return;
+  const x0 = 150, x1 = 930, y = 1600, n = ents.length, step = n > 1 ? (x1 - x0) / (n - 1) : 0;
+  ctx.globalAlpha = 0.95; ctx.lineWidth = 6; ctx.strokeStyle = 'rgba(255,255,255,.28)'; ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(x1, y); ctx.stroke();
+  const litIdx = ents.filter((e) => si >= e.i).length - 1; const reach = litIdx + (litIdx < n - 1 ? 0 : 0);
+  ctx.strokeStyle = '#ffd23f'; ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(x0 + step * reach, y); ctx.stroke();
+  ents.forEach((e, k) => {
+    const x = x0 + step * k, lit = si >= e.i, cur = si === e.i, pop = cur ? ss(0, 0.4, u) : 1, r = (cur ? 16 + 3 * Math.sin(u * 8) : 12) * (lit ? pop : 1);
+    ctx.fillStyle = lit ? '#ffd23f' : '#555'; ctx.beginPath(); ctx.arc(x, y, r, 0, 7); ctx.fill();
+    text(e.year, x, y - 46, cur ? 40 : 34, lit ? '#ffd23f' : '#888', 'center', 900, 7, 220);
+    text(e.label, x, y + 46, 23, lit ? '#fff' : '#9a9a9a', 'center', 800, 5, Math.max(150, step - 12));
+  });
+  ctx.globalAlpha = 1;
 }
 
 // ---- motifs (u = local time 0..5) ----
@@ -154,6 +193,35 @@ M.castle_night = (u, sc, ac) => {
   for (let b = 0; b < 7; b++) { const bx = (rnd(b) * W + u * 120 * (0.6 + rnd(b + 2))) % W, by = 300 + rnd(b + 5) * 400 + Math.sin(u * 6 + b) * 30; ctx.fillStyle = '#000'; ctx.beginPath(); ctx.moveTo(bx, by); ctx.lineTo(bx + 34, by - 14 + Math.sin(u * 18 + b) * 12); ctx.lineTo(bx + 22, by + 6); ctx.lineTo(bx - 34, by - 14 + Math.sin(u * 18 + b) * 12); ctx.closePath(); ctx.fill(); }
   const f = ctx.createLinearGradient(0, 1050, 0, 1400); f.addColorStop(0, 'rgba(160,170,200,0)'); f.addColorStop(1, 'rgba(160,170,200,.25)'); ctx.fillStyle = f; ctx.fillRect(0, 1050, W, 350);
 };
+
+// ---- current-affairs motifs ----
+const LAND = [
+  [[-168,66],[-140,70],[-95,72],[-80,68],[-60,55],[-55,48],[-70,42],[-80,30],[-97,25],[-105,20],[-90,15],[-80,8],[-100,17],[-117,32],[-125,45],[-135,58]],
+  [[-55,60],[-20,70],[-20,82],[-60,82],[-70,76]],
+  [[-80,10],[-60,10],[-35,-5],[-40,-22],[-55,-35],[-68,-55],[-75,-50],[-72,-30],[-80,-5]],
+  [[-10,36],[-9,44],[0,50],[10,56],[30,70],[40,66],[40,45],[28,40],[15,38]],
+  [[-17,21],[-5,36],[10,37],[32,31],[43,12],[51,11],[40,-12],[33,-27],[20,-35],[12,-17],[9,4],[-8,5],[-17,14]],
+  [[30,70],[100,76],[140,70],[180,66],[160,52],[142,46],[122,30],[110,18],[105,8],[98,16],[88,22],[78,8],[72,22],[58,25],[48,30],[36,36],[40,45],[40,66]],
+  [[114,-22],[130,-12],[142,-11],[153,-27],[146,-39],[130,-32],[115,-34]]
+];
+const mapXY = (lon, lat) => [190 + (lon + 180) / 360 * 700, 500 + (80 - lat) / 140 * 350];
+M.world_map = (u, sc, ac) => {
+  bgGrad('#06121f', '#030811'); glow(540, 760, 700, 'rgba(63,216,207,A)', 0.14);
+  ctx.strokeStyle = 'rgba(63,216,207,.10)'; ctx.lineWidth = 2; for (let i = 0; i <= 12; i++) { const x = 190 + i * 700 / 12; ctx.beginPath(); ctx.moveTo(x, 500); ctx.lineTo(x, 850); ctx.stroke(); } for (let i = 0; i <= 5; i++) { const y = 500 + i * 70; ctx.beginPath(); ctx.moveTo(190, y); ctx.lineTo(890, y); ctx.stroke(); }
+  LAND.forEach((poly) => { ctx.beginPath(); poly.forEach(([lo, la], i) => { const [x, y] = mapXY(lo, la); i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }); ctx.closePath(); ctx.fillStyle = 'rgba(70,110,140,.55)'; ctx.fill(); ctx.strokeStyle = 'rgba(120,200,230,.7)'; ctx.lineWidth = 3; ctx.stroke(); });
+  const pins = sc.pins || [];
+  for (let i = 0; i < pins.length - 1; i++) { const [x0, y0] = mapXY(pins[i].lon, pins[i].lat), [x1, y1] = mapXY(pins[i + 1].lon, pins[i + 1].lat), f = ss(1.2 + i * 0.7, 2.0 + i * 0.7, u); if (f <= 0) continue; ctx.strokeStyle = ac; ctx.lineWidth = 5; ctx.setLineDash([16, 12]); ctx.beginPath(); ctx.moveTo(x0, y0); ctx.quadraticCurveTo((x0 + x1) / 2, Math.min(y0, y1) - 80, lerp(x0, x1, f), lerp(y0, y1, f) - Math.sin(f * 3.14) * 60); ctx.stroke(); ctx.setLineDash([]); }
+  pins.forEach((p, i) => { const [x, y] = mapXY(p.lon, p.lat), k = ss(0.4 + i * 0.7, 0.8 + i * 0.7, u); if (k <= 0) return; ctx.globalAlpha = k; const r = 14 + 22 * ((u * 1.4 + i * 0.3) % 1); ctx.strokeStyle = ac; ctx.lineWidth = 4; ctx.globalAlpha = k * (1 - ((u * 1.4 + i * 0.3) % 1)); ctx.beginPath(); ctx.arc(x, y, r, 0, 7); ctx.stroke(); ctx.globalAlpha = k; ctx.fillStyle = ac; ctx.beginPath(); ctx.arc(x, y, 12, 0, 7); ctx.fill(); const ly = y < 640 ? y + 44 : y - 44; ctx.fillStyle = 'rgba(0,0,0,.7)'; const w = Math.min(300, 28 + p.name.length * 17); ctx.beginPath(); ctx.roundRect(clamp(x - w / 2, 20, W - w - 20), ly - 22, w, 44, 14); ctx.fill(); text(p.name, clamp(x, w / 2 + 20, W - w / 2 - 20), ly, 28, '#fff', 'center', 800, 0, w - 16); ctx.globalAlpha = 1; });
+  text('ILLUSTRATIVE MAP', 540, 858, 22, 'rgba(255,255,255,.45)', 'center', 700);
+};
+M.stat_chart = (u, sc, ac) => {
+  bgGrad('#0a0f1a', '#04060c'); glow(540, 760, 700, 'rgba(255,210,63,A)', 0.08);
+  const c = sc.chart || { title: '', bars: [] }, bars = c.bars.slice(0, 5), mx = Math.max(...bars.map((b) => b.value), 1);
+  text(c.title || '', 540, 552, 42, '#fff', 'center', 900, 7, 980);
+  bars.forEach((b, i) => { const y = 608 + i * 50, k = ss(0.4 + i * 0.35, 1.3 + i * 0.35, u), w = 560 * (b.value / mx) * k; ctx.fillStyle = 'rgba(255,255,255,.08)'; ctx.fillRect(250, y, 560, 40); ctx.fillStyle = i === 0 ? ac : 'rgba(255,255,255,.75)'; ctx.fillRect(250, y, w, 40); text(b.label, 235, y + 21, 28, '#fff', 'right', 800, 0, 215); text(Math.round(b.value * k * 10) / 10 + (c.suffix || ''), 250 + w + 14, y + 21, 32, '#ffd23f', 'left', 900, 5, 250); });
+  text('ILLUSTRATIVE CHART · SEE SOURCES', 540, 858, 22, 'rgba(255,255,255,.45)', 'center', 700);
+};
+
 function gel(x, y, w, h, lanes, u) {
   ctx.fillStyle = 'rgba(8,16,22,.92)'; ctx.fillRect(x, y, w, h); ctx.strokeStyle = 'rgba(63,216,207,.5)'; ctx.lineWidth = 3; ctx.strokeRect(x, y, w, h);
   const lw = w / lanes.length;
@@ -173,10 +241,20 @@ M.dna_lab = (u, sc, ac) => {
 };
 M.cta = (u, sc, ac) => {
   bgGrad('#12090c', '#050205'); glow(540, 700, 800, 'rgba(255,74,100,A)', 0.22 + 0.06 * Math.sin(u * 6));
-  helix(540, 820, 900, 170, u * 2.2, 0.28, TEAL, GOLD);
-  const p = ss(1.0, 1.5, u) * (1 + 0.04 * Math.sin(u * 9)); ctx.save(); ctx.translate(540, 1030); ctx.scale(p, p);
-  ctx.fillStyle = '#ff2d55'; ctx.beginPath(); ctx.roundRect(-250, -62, 500, 124, 62); ctx.fill(); text('▶  ' + (sc.cta || 'FOLLOW'), 0, 4, 66, '#fff', 'center', 900, 0, 440); ctx.restore();
-  ctx.globalAlpha = ss(2.2, 2.8, u); ctx.fillStyle = 'rgba(255,255,255,.95)'; ctx.beginPath(); ctx.roundRect(120, 1760, 840, 120, 40); ctx.fill(); text((sc.bubble || 'WHAT NEXT?') + ' 💬', 540, 1822, 52, '#111', 'center', 900, 0, 780); ctx.globalAlpha = 1;
+  helix(540, 820, 900, 170, u * 2.2, 0.2, TEAL, GOLD);
+  if (sc.recap && sc.recap.length) {
+    const n = Math.min(3, sc.recap.length), h = 28 + n * 66, y0 = 770; ctx.globalAlpha = ss(0.4, 0.8, u); panel(60, y0, 960, h, '#5dff9a');
+    sc.recap.slice(0, 3).forEach((f, i) => { const k = ss(0.6 + i * 0.5, 1.0 + i * 0.5, u); ctx.globalAlpha = k; text('✓ ' + f, 104 + (1 - k) * 80, y0 + 48 + i * 66, 42, '#fff', 'left', 800, 0, 890); }); ctx.globalAlpha = 1;
+  }
+  const p = ss(2.0, 2.5, u) * (1 + 0.04 * Math.sin(u * 9)); ctx.save(); ctx.translate(540, 1090); ctx.scale(p, p);
+  ctx.fillStyle = '#ff2d55'; ctx.beginPath(); ctx.roundRect(-250, -58, 500, 116, 58); ctx.fill(); text('▶  ' + (sc.cta || 'FOLLOW'), 0, 4, 62, '#fff', 'center', 900, 0, 440); ctx.restore();
+  if (sc.poll && sc.poll.length === 2) {
+    const k = ss(2.8, 3.3, u); ctx.globalAlpha = k;
+    sc.poll.forEach((l, i) => { const x = i ? 570 : 70; ctx.fillStyle = i ? 'rgba(63,216,207,.9)' : 'rgba(255,210,63,.95)'; ctx.beginPath(); ctx.roundRect(x, 1175, 440, 84, 42); ctx.fill(); text(l, x + 220, 1219, 38, '#111', 'center', 900, 0, 400); });
+    ctx.globalAlpha = 1;
+  }
+  ctx.globalAlpha = ss(3.4, 3.9, u); ctx.fillStyle = 'rgba(255,255,255,.95)'; ctx.beginPath(); ctx.roundRect(100, 1555, 880, 100, 36); ctx.fill(); text((sc.bubble || 'WHAT NEXT?') + ' 💬', 540, 1605, 46, '#111', 'center', 900, 0, 820); ctx.globalAlpha = 1;
+  if (story.sources && story.sources.length) text('SOURCES: ' + story.sources.join(' · '), 540, 1690, 24, 'rgba(255,255,255,.55)', 'center', 700, 0, 1000);
 };
 
 // ---- subtitles (word-timed chunks, current word highlighted) ----
@@ -195,7 +273,7 @@ window.renderFrame = (t) => {
   const si = Math.min(5, Math.floor(t / 5)), u = t - si * 5, sc = story.scenes[si], ac = sc.accent || GOLD;
   ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, W, H); ctx.globalAlpha = 1;
   const punch = 1 + 0.07 * (1 - ss(0, 0.28, u)); ctx.save(); ctx.translate(W / 2, H / 2); ctx.scale(punch, punch); ctx.translate(-W / 2, -H / 2);
-  (M[sc.motif] || M.portrait)(u, sc, ac); layers(sc, u, ac); ctx.restore();
+  (M[sc.motif] || M.portrait)(u, sc, ac); layers(sc, u, ac); reveal(sc, u); facts(sc, u, ac); if (sc.motif !== 'cta') timeline(si, u); hud(si, u); ctx.restore();
   for (let i = 0; i < 260; i++) { ctx.fillStyle = `rgba(255,255,255,${0.05 + 0.06 * rnd(i + t * 31)})`; ctx.fillRect(rnd(i * 3 + t * 17) * W, rnd(i * 7 + t * 11) * H, 3, 3); }
   const fl = (1 - ss(0, 0.18, u)) * (si === 0 ? 0 : 0.65); if (fl > 0) { ctx.fillStyle = `rgba(255,255,255,${fl})`; ctx.fillRect(0, 0, W, H); }
   if (si === 0 && t < 0.25) { ctx.fillStyle = `rgba(255,40,40,${0.5 * (1 - t / 0.25)})`; ctx.fillRect(0, 0, W, H); }

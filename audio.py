@@ -80,6 +80,10 @@ for c in [5, 10, 15, 20, 25]:
     whoosh(c - 0.35, 0.5, 0.45); impact(c, 0.85)
 for i, sc in enumerate(story['scenes']):
     b = i * 5; m = sc['motif']
+    if sc.get('facts') and m not in ('dna_lab', 'cta'):
+        for j in range(min(3, len(sc['facts']))): place(sfx, glide(500, 950, 0.09) * env(int(0.09 * SR), 0.002, 0.07) * 0.3, b + 0.9 + j * 0.55, 1.0)
+    if sc.get('tl'): place(sfx, (tone(660, 0.18) + tone(990, 0.18)) * env(int(0.18 * SR), 0.002, 0.15) * 0.18, b + 0.05, 1.0)
+    if sc.get('reveal'): place(sfx, glide(260, 120, 0.35) * env(int(0.35 * SR), 0.005, 0.3) * 0.35, b + 2.4, 1.0)
     if sc.get('kicker'): typer(b + 0.15, min(14, len(sc['kicker'])), 1 / 10)
     if m == 'building':
         for j in range(7): place(sfx, tone(880 * 0.75 ** (j % 3), 0.25) * env(int(0.25 * SR), 0.003, 0.22) * 0.2, b + 2.4 + j * 0.25, 1.0)
@@ -103,6 +107,11 @@ for i, sc in enumerate(story['scenes']):
         place(sfx, (tone(1175, 0.45) + tone(1760, 0.45) * 0.6) * env(int(0.45 * SR), 0.003, 0.4) * 0.3, b + 1.3, 1.0)
         place(sfx, tone(110, 0.55, 'saw') * env(int(0.55 * SR), 0.005, 0.1) * 0.35, b + 2.9, 1.0)
         place(sfx, glide(500, 900, 0.3) * env(int(0.3 * SR), 0.005, 0.2) * 0.2, b + 3.7, 1.0)
+    elif m == 'world_map':
+        for j in range(4): place(sfx, (tone(880, 0.2) + tone(1320, 0.2) * 0.5) * env(int(0.2 * SR), 0.002, 0.18) * 0.18, b + 0.4 + j * 0.7, 1.0)
+    elif m == 'stat_chart':
+        for j in range(5):
+            for q in range(6): place(sfx, tone(500 + 60 * j + 40 * q, 0.03, 'square') * env(int(0.03 * SR), 0.001, 0.025) * 0.15, b + 0.5 + j * 0.35 + q * 0.12, 1.0)
     elif m == 'cta':
         place(sfx, glide(600, 1500, 0.12) * env(int(0.12 * SR), 0.002, 0.1) * 0.35, b + 1.0, 1.0)
         place(sfx, (tone(988, 0.25) + tone(1318, 0.25)) * env(int(0.25 * SR), 0.002, 0.2) * 0.2, b + 2.2, 1.0)

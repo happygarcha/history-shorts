@@ -9,6 +9,7 @@ STORY="$1"
 NAME=$(basename "$STORY" .json)
 mkdir -p out vo
 
+python check_story.py "$STORY"
 python gen_vo.py "$STORY"
 python audio.py "$STORY"
 cp "$STORY" web/story.json

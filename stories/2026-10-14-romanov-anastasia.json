@@ -1,15 +1,124 @@
 {
+  "kind": "history",
   "topic": "Romanov / Anastasia: DNA vs Anna Anderson",
   "slug": "romanov-anastasia",
+  "hud": "CASE FILE: THE LOST PRINCESS",
+  "sources": [
+    "Gill et al., Nature Genetics 1994",
+    "Coble et al., PLoS ONE 2009"
+  ],
   "scenes": [
-    {"vo": "She swore she was the Tsar's lost daughter. Was she telling the truth?", "motif": "portrait", "headline": ["THE TSAR’S", "LOST", "DAUGHTER?"], "sub": "A MYSTERY THAT LASTED DECADES"},
-    {"vo": "In 1918, the Romanov family vanished. Rumors said Anastasia escaped.", "motif": "building", "kicker": "1918", "sub": "YEKATERINBURG · RUSSIA", "reveal": "THE FAMILY VANISHED"},
-    {"vo": "In 1920, a woman in Berlin claimed to be her.", "motif": "city_rain", "kicker": "1920 · BERLIN", "sub": "A WOMAN CLAIMS:", "reveal": "“I AM ANASTASIA”"},
-    {"vo": "In 1991, a hidden grave was found. DNA matched the Tsar's family.", "motif": "forest_dig", "kicker": "1991", "sub": "A HIDDEN GRAVE IS FOUND", "reveal": "DNA MATCHES THE TSAR’S FAMILY"},
-    {"vo": "DNA confirmed all five children died. Anna's matched a Polish factory worker.", "motif": "dna_lab", "title": "DNA TEST",
-      "left": {"labels": ["ROMANOV", "REMAINS"], "verdict": "✓ MATCH", "lines": ["ALL 5 CHILDREN", "CONFIRMED"]},
-      "right": {"labels": ["ANNA A.", "ROMANOV"], "verdict": "✗ NO MATCH", "lines": ["ANNA ANDERSON", "≠ ROMANOV"]},
-      "footer": ["HER DNA MATCHED A", "POLISH FACTORY WORKER’S FAMILY"]},
-    {"vo": "Follow for more mysteries solved by DNA. Which should we crack next?", "motif": "cta", "headline": ["MYSTERY", "SOLVED", "BY DNA"], "cta": "FOLLOW", "bubble": "WHICH MYSTERY NEXT?"}
+    {
+      "vo": "She swore she was the Tsar's lost daughter. Was she telling the truth?",
+      "motif": "portrait",
+      "headline": [
+        "THE TSAR’S",
+        "LOST",
+        "DAUGHTER?"
+      ],
+      "sub": "ANNA ANDERSON · A 20TH-CENTURY MYSTERY"
+    },
+    {
+      "vo": "In 1918, the Romanov family vanished. Rumors said Anastasia escaped.",
+      "motif": "building",
+      "kicker": "1918",
+      "sub": "YEKATERINBURG · RUSSIA",
+      "reveal": "THE FAMILY WAS EXECUTED",
+      "facts": [
+        "TSAR NICHOLAS II, HIS WIFE + 5 CHILDREN",
+        "SHOT BY BOLSHEVIKS IN JULY 1918",
+        "BODIES HIDDEN · RUMORS SPREAD"
+      ],
+      "tl": {
+        "year": "1918",
+        "label": "FAMILY EXECUTED"
+      }
+    },
+    {
+      "vo": "In 1920, a woman in Berlin claimed to be her.",
+      "motif": "city_rain",
+      "kicker": "1920 · BERLIN",
+      "sub": "A WOMAN CLAIMS:",
+      "reveal": "“I AM ANASTASIA”",
+      "facts": [
+        "PULLED FROM A BERLIN CANAL",
+        "LATER KNOWN AS ANNA ANDERSON",
+        "SOME EXILES BELIEVED HER"
+      ],
+      "tl": {
+        "year": "1920",
+        "label": "ANNA APPEARS"
+      }
+    },
+    {
+      "vo": "In 1991, a hidden grave was found. DNA matched the Tsar's family.",
+      "motif": "forest_dig",
+      "kicker": "1991",
+      "sub": "A HIDDEN GRAVE IS FOUND",
+      "reveal": "DNA MATCHES THE TSAR’S FAMILY",
+      "facts": [
+        "9 SKELETONS NEAR YEKATERINBURG",
+        "DNA MATCHED THE TSAR + TSARINA",
+        "COMPARED WITH LIVING RELATIVES"
+      ],
+      "tl": {
+        "year": "1991",
+        "label": "GRAVE FOUND"
+      }
+    },
+    {
+      "vo": "DNA confirmed all five children died. Anna's matched a Polish factory worker.",
+      "motif": "dna_lab",
+      "title": "DNA TEST",
+      "left": {
+        "labels": [
+          "ROMANOV",
+          "REMAINS"
+        ],
+        "verdict": "✓ MATCH",
+        "lines": [
+          "ALL 5 CHILDREN",
+          "CONFIRMED"
+        ]
+      },
+      "right": {
+        "labels": [
+          "ANNA A.",
+          "ROMANOV"
+        ],
+        "verdict": "✗ NO MATCH",
+        "lines": [
+          "ANNA ANDERSON",
+          "≠ ROMANOV"
+        ]
+      },
+      "footer": [
+        "HER DNA MATCHED A",
+        "POLISH FACTORY WORKER’S FAMILY"
+      ],
+      "tl": {
+        "year": "2008",
+        "label": "DNA CONFIRMS"
+      }
+    },
+    {
+      "vo": "Follow for more mysteries solved by DNA. Which should we crack next?",
+      "motif": "cta",
+      "headline": [
+        "MYSTERY",
+        "SOLVED"
+      ],
+      "recap": [
+        "ANNA ANDERSON WAS NOT ANASTASIA",
+        "ALL ROMANOV CHILDREN DIED IN 1918",
+        "DNA ENDED THE DEBATE"
+      ],
+      "cta": "FOLLOW",
+      "poll": [
+        "COMMENT: ANNA",
+        "COMMENT: DNA"
+      ],
+      "bubble": "WHICH MYSTERY NEXT?"
+    }
   ]
 }
