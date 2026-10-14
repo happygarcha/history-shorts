@@ -218,7 +218,7 @@ M.stat_chart = (u, sc, ac) => {
   bgGrad('#0a0f1a', '#04060c'); glow(540, 760, 700, 'rgba(255,210,63,A)', 0.08);
   const c = sc.chart || { title: '', bars: [] }, bars = c.bars.slice(0, 5), mx = Math.max(...bars.map((b) => b.value), 1);
   text(c.title || '', 540, 552, 42, '#fff', 'center', 900, 7, 980);
-  bars.forEach((b, i) => { const y = 608 + i * 50, k = ss(0.4 + i * 0.35, 1.3 + i * 0.35, u), w = 560 * (b.value / mx) * k; ctx.fillStyle = 'rgba(255,255,255,.08)'; ctx.fillRect(250, y, 560, 40); ctx.fillStyle = i === 0 ? ac : 'rgba(255,255,255,.75)'; ctx.fillRect(250, y, w, 40); text(b.label, 235, y + 21, 28, '#fff', 'right', 800, 0, 215); text(Math.round(b.value * k * 10) / 10 + (c.suffix || ''), 250 + w + 14, y + 21, 32, '#ffd23f', 'left', 900, 5, 250); });
+  bars.forEach((b, i) => { const y = 608 + i * 50, k = ss(0.4 + i * 0.35, 1.3 + i * 0.35, u), w = 560 * (b.value / mx) * k; ctx.fillStyle = 'rgba(255,255,255,.08)'; ctx.fillRect(250, y, 560, 40); ctx.fillStyle = i === 0 ? ac : 'rgba(255,255,255,.75)'; ctx.fillRect(250, y, w, 40); text(b.label, 235, y + 21, 28, '#fff', 'right', 800, 0, 215); text((b.value * k).toFixed(bars.some((x) => !Number.isInteger(x.value)) ? 1 : 0) + (c.suffix || ''), 250 + w + 14, y + 21, 32, '#ffd23f', 'left', 900, 5, 250); });
   text('ILLUSTRATIVE CHART · SEE SOURCES', 540, 858, 22, 'rgba(255,255,255,.45)', 'center', 700);
 };
 
@@ -239,6 +239,14 @@ M.dna_lab = (u, sc, ac) => {
   ctx.globalAlpha = ss(2.9, 3.4, u); text(R.verdict, 790, 920, 80, RED, 'center', 900, 10, 420); R.lines.forEach((s, i) => text(s, 790, 995 + i * 45, 38, '#fff', 'center', 800, 0, 420)); ctx.globalAlpha = 1;
   if (sc.footer) { ctx.globalAlpha = ss(3.7, 4.2, u); sc.footer.forEach((s, i) => text(s, 540, 1120 + i * 60, i ? 44 : 50, ac, 'center', 900, 8, 980)); ctx.globalAlpha = 1; }
 };
+M.alert = (u, sc, ac) => {
+  bgGrad('#1a0808', '#060202'); glow(540, 700, 700, 'rgba(255,60,60,A)', 0.25 + 0.1 * Math.sin(u * 8));
+  for (let k = 0; k < 3; k++) { const f = (u * 1.2 + k / 3) % 1; ctx.strokeStyle = `rgba(255,70,70,${0.6 * (1 - f)})`; ctx.lineWidth = 6; ctx.beginPath(); ctx.arc(540, 700, 140 + f * 380, 0, 7); ctx.stroke(); }
+  ctx.save(); ctx.translate(540 + Math.sin(u * 40) * (u < 0.6 ? 6 : 1.5), 700);
+  ctx.fillStyle = '#ffcc00'; ctx.strokeStyle = '#000'; ctx.lineWidth = 12; ctx.lineJoin = 'round'; ctx.beginPath(); ctx.moveTo(0, -165); ctx.lineTo(175, 135); ctx.lineTo(-175, 135); ctx.closePath(); ctx.fill(); ctx.stroke();
+  text('!', 0, 40, 210, '#111'); ctx.restore();
+};
+
 M.cta = (u, sc, ac) => {
   bgGrad('#12090c', '#050205'); glow(540, 700, 800, 'rgba(255,74,100,A)', 0.22 + 0.06 * Math.sin(u * 6));
   helix(540, 820, 900, 170, u * 2.2, 0.2, TEAL, GOLD);

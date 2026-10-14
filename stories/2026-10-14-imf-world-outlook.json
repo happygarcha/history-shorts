@@ -1,0 +1,156 @@
+{
+  "kind": "current",
+  "asof": "2026-10-14",
+  "topic": "IMF World Economic Outlook, October 2026",
+  "slug": "imf-world-outlook",
+  "hud": "WORLD WATCH: IMF OUTLOOK",
+  "sources": [
+    "CNBC, 2026-10-12",
+    "US News (Reuters), 2026-10-12",
+    "BNN Bloomberg (AP), 2026-10-13",
+    "Manila Times (AP), 2026-10-14"
+  ],
+  "scenes": [
+    {
+      "vo": "The world economy just got an upgrade. But the IMF sees risks ahead.",
+      "motif": "stat_chart",
+      "headline": [
+        "WORLD ECONOMY",
+        "UPGRADED?"
+      ],
+      "sub": "IMF OUTLOOK · OCTOBER 2026",
+      "chart": {
+        "title": "WORLD GROWTH FORECAST 2026",
+        "suffix": "%",
+        "bars": [
+          {
+            "label": "JULY",
+            "value": 3.0
+          },
+          {
+            "label": "OCTOBER",
+            "value": 3.1
+          }
+        ]
+      }
+    },
+    {
+      "vo": "On October 13, the IMF released its new world economic forecast.",
+      "motif": "world_map",
+      "kicker": "OCT 13",
+      "sub": "IMF ANNUAL MEETINGS · BANGKOK",
+      "reveal": "NEW WORLD ECONOMIC OUTLOOK",
+      "pins": [
+        {
+          "name": "BANGKOK",
+          "lon": 100.5,
+          "lat": 13.75
+        }
+      ],
+      "facts": [
+        "WHO: THE IMF, A GLOBAL ECONOMY WATCHDOG",
+        "WHERE: ANNUAL MEETINGS IN BANGKOK",
+        "WHAT: FORECASTS FOR 2026 AND 2027"
+      ],
+      "tl": {
+        "year": "JULY",
+        "label": "FORECAST 3.0%"
+      }
+    },
+    {
+      "vo": "2026 growth was raised to 3.1 percent, from 3.0.",
+      "motif": "stat_chart",
+      "kicker": "3.1%",
+      "sub": "WORLD GROWTH FORECAST FOR 2026",
+      "reveal": "A SMALL UPGRADE",
+      "chart": {
+        "title": "GLOBAL GROWTH FORECAST (%)",
+        "suffix": "%",
+        "bars": [
+          {
+            "label": "JULY 2026",
+            "value": 3.0
+          },
+          {
+            "label": "OCT 2026",
+            "value": 3.1
+          },
+          {
+            "label": "2027",
+            "value": 3.4
+          }
+        ]
+      },
+      "facts": [
+        "2026: 3.1%, UP FROM 3.0% IN JULY",
+        "2027: 3.4%, UNCHANGED FROM JULY",
+        "AI INVESTMENT IS PROPPING UP GROWTH"
+      ],
+      "tl": {
+        "year": "OCT 13",
+        "label": "RAISED TO 3.1%"
+      }
+    },
+    {
+      "vo": "Growth is lopsided: just 32 countries drive 95 percent of it.",
+      "motif": "stat_chart",
+      "kicker": "32 = 95%",
+      "sub": "WHO IS DRIVING WORLD GROWTH",
+      "reveal": "GROWTH IS CONCENTRATED",
+      "chart": {
+        "title": "SHARE OF GLOBAL GROWTH (%)",
+        "suffix": "%",
+        "bars": [
+          {
+            "label": "32 COUNTRIES",
+            "value": 95
+          },
+          {
+            "label": "ALL OTHERS",
+            "value": 5
+          }
+        ]
+      },
+      "facts": [
+        "32 COUNTRIES = 95% OF GLOBAL GROWTH",
+        "THE REST OF THE WORLD SHARES ABOUT 5%",
+        "SOURCE: IMF OUTLOOK, OCTOBER 2026"
+      ],
+      "tl": {
+        "year": "2027",
+        "label": "3.4% EXPECTED"
+      }
+    },
+    {
+      "vo": "The IMF warns an AI slump or rising debt could change the picture.",
+      "motif": "alert",
+      "kicker": "RISKS",
+      "sub": "WHAT COULD GO WRONG",
+      "reveal": "UPGRADE, WITH A CATCH",
+      "facts": [
+        "RISK 1: A SHARP DROP IN AI INVESTMENT",
+        "RISK 2: COSTLIER GOVERNMENT BORROWING",
+        "BOTH COULD SLOW THE WORLD ECONOMY"
+      ]
+    },
+    {
+      "vo": "Follow for world news explained simply. Which story should we cover next?",
+      "motif": "cta",
+      "headline": [
+        "WORLD",
+        "WATCH"
+      ],
+      "recap": [
+        "2026 GROWTH FORECAST UP TO 3.1%",
+        "2027 FORECAST HOLDS AT 3.4%",
+        "RISKS: AI BOOM AND DEBT"
+      ],
+      "cta": "FOLLOW",
+      "poll": [
+        "COMMENT: OPTIMISTIC",
+        "COMMENT: WORRIED"
+      ],
+      "bubble": "WHICH STORY NEXT?"
+    }
+  ]
+}

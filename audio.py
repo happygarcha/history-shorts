@@ -107,6 +107,8 @@ for i, sc in enumerate(story['scenes']):
         place(sfx, (tone(1175, 0.45) + tone(1760, 0.45) * 0.6) * env(int(0.45 * SR), 0.003, 0.4) * 0.3, b + 1.3, 1.0)
         place(sfx, tone(110, 0.55, 'saw') * env(int(0.55 * SR), 0.005, 0.1) * 0.35, b + 2.9, 1.0)
         place(sfx, glide(500, 900, 0.3) * env(int(0.3 * SR), 0.005, 0.2) * 0.2, b + 3.7, 1.0)
+    elif m == 'alert':
+        for j in range(3): place(sfx, tone(880, 0.16, 'square') * env(int(0.16 * SR), 0.003, 0.05) * 0.22, b + 0.35 + j * 0.5, 1.0)
     elif m == 'world_map':
         for j in range(4): place(sfx, (tone(880, 0.2) + tone(1320, 0.2) * 0.5) * env(int(0.2 * SR), 0.002, 0.18) * 0.18, b + 0.4 + j * 0.7, 1.0)
     elif m == 'stat_chart':

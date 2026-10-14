@@ -2,7 +2,7 @@
 Exits non-zero with a clear list of problems so the author can fix the JSON and retry."""
 import json, sys
 
-MOTIFS = {'world_map', 'stat_chart', 'portrait', 'building', 'city_rain', 'forest_dig', 'ship_sea', 'desert_ruins', 'map_path', 'document', 'castle_night', 'dna_lab', 'cta'}
+MOTIFS = {'alert', 'world_map', 'stat_chart', 'portrait', 'building', 'city_rain', 'forest_dig', 'ship_sea', 'desert_ruins', 'map_path', 'document', 'castle_night', 'dna_lab', 'cta'}
 story = json.load(open(sys.argv[1]))
 errs = []
 def need(c, msg):
