@@ -30,7 +30,10 @@ for i, sc in enumerate(scenes):
     start = i * 5 + (0.05 if i == 0 else 0.15)
     speed = 1.12 if LANG == 'en' else 1.0
     while True:
-        s, sr = k.create(text, voice=VOICE, speed=speed, lang=KLANG)
+        if LANG == 'pa' and os.path.exists(f'vo/pa_{i}.wav'):  # native Punjabi voice (AI4Bharat), rendered by synth_pa.sh
+            s, sr = sf.read(f'vo/pa_{i}.wav')
+        else:
+            s, sr = k.create(text, voice=VOICE, speed=speed, lang=KLANG)
         s = np.asarray(s, dtype=np.float64)
         if sr != SR:
             s = signal.resample_poly(s, SR, sr)
