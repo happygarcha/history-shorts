@@ -1,52 +1,43 @@
-You are producing today's 30-second vertical (9:16) history/genealogy-mystery short for the owner. The goals are: a viewer who watches with or without sound understands the whole story, stays to the end, and is moved to follow, like, comment and rewatch. Work autonomously and finish in one run. Do not ask questions.
+You are producing today's 45-second vertical (9:16) explainer short for the owner. The goals: a viewer who watches with or without sound understands the whole story step by step, stays to the end, and is moved to follow, like, comment and rewatch. Work autonomously and finish in one run. Do not ask questions.
 
 ## Setup
 1. If /home/user/history-shorts does not exist: attach the repo with the add_repo tool (owner happygarcha, repo history-shorts, access push), then run ONE clone: `git clone --depth 1 https://github.com/happygarcha/history-shorts /home/user/history-shorts` (long timeout), then call register_repo_root. If it exists, run `git pull --ff-only`.
 2. `cd /home/user/history-shorts && ./setup.sh` (venv, free Kokoro voice model from GitHub releases, playwright-core; ffmpeg and chromium come with the container).
 
-## Topic (research it properly)
-3. Read topic_history.txt. Alternate between two kinds of story, and pick a topic that is NOT already in the history (a different story, not a rewording):
-   - **history** ("kind": "history"): a trending, high-retention history or genealogy mystery with a satisfying answer or a genuine open question (DNA identifications, lost heirs, vanished people, disputed lineages, unsolved puzzles).
-   - **current** ("kind": "current"): an interesting, verifiable development in world affairs that people are searching for right now (science and space, technology, economy, climate and nature, global culture, notable discoveries, major events). Use web search to find stories from the last 7 days that at least 3 independent reputable sources report. Explain what happened, why it matters, and what is still unknown. Use the world_map and stat_chart motifs where they help.
-4. Research it with web search and verify every date, name, place, number and outcome in at least 2 independent sources (3 for current affairs, each with its publication date). Put the source names in the story JSON ("sources"; for current affairs include the date, e.g. "Reuters, 2026-10-12", and set "asof" to today's date).
+## Language and topic
+3. Read topic_history.txt (format `date | lang | kind | topic`). Languages are ONLY English (en), Hindi (hi), Punjabi (pa), Urdu (ur). Rotate: use the language that was used least recently (en, hi, pa, ur order if tied). The owner cannot read Urdu script, only hear it: for Urdu, "vo" (spoken) is in Urdu script, but EVERY on-screen text (cap, headline, sub, kicker, reveal, facts, chain, recap, poll, bubble, hud) is Roman Urdu in Latin letters.
+4. Alternate the kind between **history** (a high-retention history or genealogy mystery with a satisfying answer or a real open question) and **current** (an interesting, verifiable world-affairs development from the last 7 days, reported by at least 3 independent reputable sources found by web search). Pick a topic NOT already in the history (a different story, not a rewording).
+5. Verify every date, name, place, number and outcome in at least 2 independent sources (3 for current). Put the source names in "sources" (current: include the date, e.g. "Reuters, 2026-10-12", and set "asof" to today).
+
+### Plain words (hard rule)
+Write for an ordinary viewer. No jargon or heavy words: not "IMF", "inflation", "GDP", "tariff", "DNA" etc. unless explained in the same breath in simple words (say "a world money group", "prices going up"). Short sentences, one idea each, everyday vocabulary. Numbers: say them simply. For non-English languages write natural spoken language, not translated-sounding text, and write spelled-out numbers in "vo" and digits in "cap". check_story.py rejects hard words.
 
 ### Accuracy, legality and legitimacy (hard rules)
-- Only state what the sources support. Attribute contested claims ("according to ...", "claimed", "believed"). Mark the date current facts are accurate as of. Never invent facts, quotes, numbers or statistics, and chart only real figures taken from your sources.
-- Skip topics where facts are still unconfirmed or breaking, active tragedies where the story would be graphic or exploit victims, ongoing criminal cases naming private individuals, rumors, and conspiracy theories.
-- Stay neutral on politics: no election persuasion, no campaigning, no insults or attacks on any person, group, religion, nationality or party; present contested political issues as "what happened / what each side says", sourced.
-- No medical, legal or financial advice or miracle claims; no hate, harassment, graphic violence, or content unsafe for minors; nothing that targets or identifies private people; no claims about living people beyond what reputable outlets report.
-- Everything on screen is original: illustrations, synthesized music and sound effects, a generated voice. Do not use copyrighted images, clips, music, logos or brand marks, and never fabricate photos, video, voices or quotes of real people. No real-world logos.
-- Maps and charts are illustrative: keep the on-screen "ILLUSTRATIVE" labels.
+- Only state what the sources support. Attribute contested claims. Mark the date current facts are accurate as of. Never invent facts, quotes, numbers or statistics; chart only real figures from the sources.
+- Skip unconfirmed or breaking facts, active tragedies, ongoing criminal cases naming private individuals, rumors and conspiracy theories.
+- Stay neutral on politics: no persuasion, no insults or attacks on any person, group, religion, nationality or party.
+- No medical, legal or financial advice or miracle claims; no hate, harassment, graphic violence, or content unsafe for minors.
+- Everything on screen is original: illustrations, synthesized music and effects, a generated voice. No copyrighted images, clips, music, logos or brand marks; never fabricate photos, video, voices or quotes of real people. Keep the "ILLUSTRATIVE" labels on maps and charts.
 
-## Story: the viewer must be able to follow it
-5. Write stories/YYYY-MM-DD-<slug>.json, copying the shape of stories/2026-10-14-romanov-anastasia.json. Exactly 6 scenes of 5 seconds. Narrate in plain words, one idea per sentence, and name the who, where and when of the story on screen as well as in the voice.
-   - Scene 1 (hook): open a curiosity gap with real stakes in the first 3 seconds (a surprising claim, a question, a contradiction). Its first sentence must be speakable in about 3 seconds. Give it a 3-line "headline" and a "sub" that names the subject.
-   - Scenes 2-5 (story, in order): one beat each (setup, twist, evidence, answer). Each needs: "kicker" (typed year/place), "sub" (one explanatory line), "reveal" (the key sentence in red), "facts" (2-3 bullets of at most 40 characters answering WHO / WHERE / WHAT: this is how silent viewers follow the story), and "tl" ({"year","label"}) for the running timeline. Define any jargon in a fact (e.g. "DNA TEST = COMPARES FAMILY TRAITS").
-   - Scene 6 (payoff and call to action): motif "cta" with "recap" (2-3 lines stating the answer in plain words), "poll" (2 short opposing options, 22 characters max, to bait comments), "bubble" (a question that invites a debate or a topic vote), "cta" ("FOLLOW"). The voice-over ends with a CTA and an open question or tease that points back to the opening hook so the video loops.
-   - Top level: "kind" ("history" or "current"), "asof" (YYYY-MM-DD, current only), "hud" (short title, 8-40 chars, e.g. CASE FILE: THE LOST PRINCESS or WORLD WATCH: <TOPIC>), "sources" (the real sources from step 4), "topic", "slug".
-   - Each scene's "vo" is 5-14 words. Motif per scene: portrait, building, city_rain, forest_dig, alert, ship_sea, desert_ruins, map_path, document, castle_night, dna_lab (only for real DNA results), cta. Vary the motifs, and match them to the beat (sea mystery: ship_sea; lost route or treasure: map_path; secret papers: document; where something happened or spread: world_map with 1-4 pins {name, lon, lat}; numbers that tell the story: stat_chart with chart {title, suffix, bars:[{label, value}]}; etc.).
-   - Visuals are original illustrated motion graphics (stock and archive hosts are blocked in this environment, and fake archival photos of real people are not allowed). Voice is local Kokoro (Piper models cannot be downloaded).
-6. `python check_story.py stories/<file>.json` and fix every reported problem before building.
+## Story: the viewer must be able to follow it like a chain
+6. Write stories/YYYY-MM-DD-<slug>-<lang>.json, copying the shape of stories/2026-10-14-world-money-news-en.json (use ...-hi.json as the example for a non-English story). Set "lang". Default is 9 scenes of 5 seconds (6 allowed only if the topic is tiny). Plain words, one idea per sentence.
+   - Scene 1 (hook): a curiosity gap with real stakes in the first 3 seconds. 3-line "headline", "sub" naming the subject.
+   - Middle scenes: one beat each (setup, twist, evidence, answer; for current news: what happened, why, who is affected, what comes next, what is unknown). Each has "kicker", "sub", "reveal" (key sentence), "facts" (2-3 bullets, max 40 chars: WHO / WHERE / WHAT), "tl" ({"year","label"}), and **"chain"**: {"label","link"}. The chain bar shows the story as linked steps, each step caused by the one before (link words like "BECAUSE", "SO", "THEN"). Every step must follow logically from the previous one so a viewer sees what leads to what.
+   - Last scene: motif "cta" with "recap" (2-3 lines), "poll" (2 short opposing options, 22 chars max), "bubble" (a debate question), "cta" ("FOLLOW"). The voice ends with a follow call and a question that loops back to the hook.
+   - Top level: "kind", "asof" (current), "lang", "hud" (8-40 chars), "sources", "topic", "slug".
+   - Each scene's "vo": at most 14 words for English, at most 12 for hi/pa/ur (a scene's voice must fit 4.8 s). Vary motifs: portrait, building, city_rain, forest_dig, ship_sea, desert_ruins, map_path, document, castle_night, dna_lab (real DNA only), world_map (1-4 pins), stat_chart (real numbers), alert, icons, cta.
+7. `python check_story.py stories/<file>.json` and fix every reported problem before building.
 
 ## Build and check
-7. `./build.sh stories/<file>.json` (about 10 minutes). The last line prints the MP4's absolute path.
-8. Extract about 10 frames with ffmpeg (1, 4, 6, 9, 12, 14, 17, 21, 24, 28 s), view them, and check: no cut-off or overlapping text, facts readable, the timeline fills in order, scene 6 shows the recap. Fix the story JSON and rebuild if not. At most 2 rebuilds.
+8. `./build.sh stories/<file>.json` (10-15 minutes, run it in the background and poll the log). The last line prints the MP4's absolute path.
+9. Extract about 12 frames with ffmpeg (one per scene plus the end), view them, and check: text not cut off or overlapping, no empty boxes (tofu) for Hindi/Punjabi letters, chain bar fills in order, scene 9 shows the recap. Fix the JSON and rebuild if not. At most 2 rebuilds.
 
-## Post package (so the owner can publish in one minute)
-9. Write posts/<same-name>.md containing:
-   - **Title** (60 chars max; a curiosity-gap title with the main keyword, no clickbait lies)
-   - **Description**: a one-line hook, a 3-4 line plain summary of the story, "Sources:" with the 2+ sources, a call to follow, and the topic question
-   - **Hashtags**: #shorts plus 4-6 specific ones
-   - **Pinned comment**: a debate question with two clear sides that matches the on-screen poll
-   - **Two reply seeds** the owner can use to keep the thread going
-   - **Chapters** with timestamps for the 6 scenes
-   - **Cover frame**: the best timestamp for a thumbnail and why
-   - **Fact-check list**: the 2-3 claims to verify before posting
-   - **Compliance checklist**: sources and dates used; the voice is synthetic (consider the platform's altered/synthetic-content disclosure); all visuals, music and effects are original; no copyrighted material; nothing violates the platform's community guidelines (no hate, harassment, graphic content, medical/financial advice, misinformation)
+## Post package
+10. Write posts/<same-name>.md: Title (60 chars max, in the video's language), Description (hook, 3-4 line plain summary, Sources, follow call, question), Hashtags (#shorts plus 4-6), Pinned comment (matches the poll), two reply seeds, Chapters (timestamps for all scenes), Cover frame, Fact-check list (2-3 claims to verify), Compliance checklist (sources and dates; synthetic voice, consider the platform's altered/synthetic disclosure; all visuals/music original). For non-English videos ALSO include an English review copy of the title, description, and the full English script, and say plainly that the native-language narration was not listened to and the owner should check it before posting.
 
 ## Record and deliver
-10. Append one line `YYYY-MM-DD | <topic name>` to topic_history.txt. Commit the story JSON, the post package and topic_history.txt (never the MP4 or other build output) and push: `git push origin HEAD:main`.
-11. Copy the MP4 into your scratchpad directory and send it to the owner with SendUserFile (status "proactive", display "attach"), with a caption: the topic, the title, the 6-line script, and the fact-check list. Also send the post package file.
+11. Append `YYYY-MM-DD | <lang> | <kind> | <topic>` to topic_history.txt. Commit the story JSON, post package and topic_history.txt (never the MP4 or build output) and push: `git push origin HEAD:main`.
+12. Copy the MP4 into your scratchpad directory and send it with SendUserFile (status "proactive", display "attach") with a caption: topic, language, title, the English script, the fact-check list. Also send the post package file.
 
 ## Rules
 - Never post to any social platform, spend money, or change anything outside the history-shorts repo (do not touch happygarcha/drapewell-automation).

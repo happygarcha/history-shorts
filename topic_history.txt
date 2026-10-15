@@ -1,2 +1,4 @@
-2026-10-14 | Romanov / Anastasia: DNA vs Anna Anderson
-2026-10-14 | IMF World Economic Outlook, October 2026 (current affairs)
+2026-10-14 | en | history | Romanov / Anastasia: DNA vs Anna Anderson
+2026-10-14 | en | current | IMF World Economic Outlook, October 2026
+2026-10-14 | en | current | World money outlook in plain words
+2026-10-14 | hi | current | World money outlook in plain words (Hindi)
