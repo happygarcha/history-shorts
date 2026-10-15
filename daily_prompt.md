@@ -19,7 +19,10 @@ Write for an ordinary viewer. No jargon or heavy words: not "IMF", "inflation", 
 - No medical, legal or financial advice or miracle claims; no hate, harassment, graphic violence, or content unsafe for minors.
 - Everything on screen is original: illustrations, synthesized music and effects, a generated voice. No copyrighted images, clips, music, logos or brand marks; never fabricate photos, video, voices or quotes of real people. Keep the "ILLUSTRATIVE" labels on maps and charts.
 
-## Story: the viewer must be able to follow it like a chain
+## Information quality (most important)
+Each video stands alone. Its job is that a first-time viewer, who knows nothing about the topic, finishes it understanding: (1) what happened or what this is, (2) why it happened, (3) who or what it affects, (4) a real example or number that makes it concrete, (5) what is still unknown or what happens next. Every scene must teach one new useful fact, not repeat or decorate. Define every unfamiliar word in plain speech right where it appears, and give a simple everyday comparison for any big number or idea. The "chain" bar is only a visual aid for this order of ideas (each step follows from the previous). Never make it a series or "part 1"; do not rely on other videos for context.
+
+## Story: the viewer must be able to follow it step by step
 6. Write stories/YYYY-MM-DD-<slug>-<lang>.json, copying the shape of stories/2026-10-14-world-money-news-en.json (use ...-hi.json as the example for a non-English story). Set "lang". Default is 9 scenes of 5 seconds (6 allowed only if the topic is tiny). Plain words, one idea per sentence.
    - Scene 1 (hook): a curiosity gap with real stakes in the first 3 seconds. 3-line "headline", "sub" naming the subject.
    - Middle scenes: one beat each (setup, twist, evidence, answer; for current news: what happened, why, who is affected, what comes next, what is unknown). Each has "kicker", "sub", "reveal" (key sentence), "facts" (2-3 bullets, max 40 chars: WHO / WHERE / WHAT), "tl" ({"year","label"}), and **"chain"**: {"label","link"}. The chain bar shows the story as linked steps, each step caused by the one before (link words like "BECAUSE", "SO", "THEN"). Every step must follow logically from the previous one so a viewer sees what leads to what.
